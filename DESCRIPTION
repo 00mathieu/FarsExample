@@ -1,0 +1,19 @@
+Package: FarsExample
+Type: Package
+Title: Helps explore FARS data files
+Version: 0.1.0
+Authors@R: person("Mathieu", "Jones", email = "00mathieu@gmail.com",
+                  role = c("aut", "cre"))
+Description: A set of functions that helps explore Fatality Accident Reporting System
+    (FARS) files. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+ dplyr,
+ readr
+RoxygenNote: 6.0.1
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

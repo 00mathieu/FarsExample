@@ -1,0 +1,50 @@
+---
+title: "Introduction to FARS functions"
+author: "Mathieu Jones"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Intro
+
+This package is a simple example package that I'm putting up on github as part of the R course on coursera.org.
+
+The functions that are exported as part of this package have to do with manipulating data from the US National Highway Traffic Safety Administration's Fatality Analysis Reporting System. This is a nationwide census providing the American public yearly data regarding fatal injuries suffered in motor vehicle traffic crashes. 
+
+# Sample functions
+
+First, we load the functions.
+
+```{r}
+# devtools::load_all()
+library(FarsExample)
+library(dplyr)
+```
+
+Below, I give two examples of the use of these functions.
+
+## summarise years function
+
+The summarise years functions reads in the csv for the FARS data for a particular year. It then summarises the number of fatal crashes per month in those years. The below example illustrates for the years 2013 and 2014.
+
+```{r}
+
+setwd("../data")
+fars_summarize_years(c(2013,2014))
+
+```
+
+
+## fars map function
+
+This function will plot all the accidents in a given state for a given year.
+
+```{r}
+setwd("../data")
+fars_map_state(1, 2013)
+
+```
