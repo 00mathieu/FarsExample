@@ -12,7 +12,9 @@ LazyData: true
 Imports:
  dplyr,
  readr,
- maps
+ maps,
+ tidyr,
+ graphics
 RoxygenNote: 6.0.1
 Suggests: testthat,
     knitr,
