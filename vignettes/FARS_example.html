@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Mathieu Jones" />
+
+<meta name="date" content="2017-10-15" />
+
+<title>Introduction to FARS functions</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to FARS functions</h1>
+<h4 class="author"><em>Mathieu Jones</em></h4>
+<h4 class="date"><em>2017-10-15</em></h4>
+
+
+
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>This package is a simple example package that I’m putting up on github as part of the R course on coursera.org.</p>
+<p>The functions that are exported as part of this package have to do with manipulating data from the US National Highway Traffic Safety Administration’s Fatality Analysis Reporting System. This is a nationwide census providing the American public yearly data regarding fatal injuries suffered in motor vehicle traffic crashes.</p>
+</div>
+<div id="sample-functions" class="section level1">
+<h1>Sample functions</h1>
+<p>First, we load the functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::load_all()</span>
+<span class="kw">library</span>(FarsExample)
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<p>Below, I give two examples of the use of these functions.</p>
+<div id="summarise-years-function" class="section level2">
+<h2>summarise years function</h2>
+<p>The summarise years functions reads in the csv for the FARS data for a particular year. It then summarises the number of fatal crashes per month in those years. The below example illustrates for the years 2013 and 2014.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;../data&quot;</span>)
+<span class="kw">fars_summarize_years</span>(<span class="kw">c</span>(<span class="dv">2013</span>,<span class="dv">2014</span>))</code></pre></div>
+<pre><code>## # A tibble: 12 x 3
+##    MONTH `2013` `2014`
+##  * &lt;int&gt;  &lt;int&gt;  &lt;int&gt;
+##  1     1   2230   2168
+##  2     2   1952   1893
+##  3     3   2356   2245
+##  4     4   2300   2308
+##  5     5   2532   2596
+##  6     6   2692   2583
+##  7     7   2660   2696
+##  8     8   2899   2800
+##  9     9   2741   2618
+## 10    10   2768   2831
+## 11    11   2615   2714
+## 12    12   2457   2604</code></pre>
+</div>
+<div id="fars-map-function" class="section level2">
+<h2>fars map function</h2>
+<p>This function will plot all the accidents in a given state for a given year.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;../data&quot;</span>)
+<span class="kw">fars_map_state</span>(<span class="dv">1</span>, <span class="dv">2013</span>)</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAGxElEQVR4nO2d2ZbiMAwFzf//9MxpSPAml9NNpBDfemggmzw1trwAIT3EkBRdgKsjQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYAEARIESBAgQYCboHQIr1IxzkVpw723/NeStk3XUej9f5WKZ6ne/OOoazGqUkUISvufrAS7L6NEKwmydqThEUGGAgR1PWxtK72elqd0TvAiMgelNrWkrO2ZZ7oSKKiuKa/d3e2PBQWN81F7wBqCwE/Zv5XHrieofrmN/lK5P8Vm6eCRdDZANNtTt8G5ESaol6D3gWIz3k7dMzwIn4tVm5sDUmHOn0hB3fFgt0ktKqjY2ox+8o4rxRmKEmSZskyEJaHwGlSlH9OgNcA+m3BB9iHVEwmqV4SahwUEjaPVWbrX5bsTJigVeXcuBy8lqDcmTL31skep0RtnQfWcqyzEVIZy5hI5yBw+5nk6KEtfQtDs3gUENSs+vYPexxnr955cvAalMm0tIsiesdp7n7sWEZS9SvWW1H9Zjqo9cQ3Zm6qnR9P122VaQlD9tKk11dbx4PJ0ogT1N/dWFSXIqCwHrnAmQYLssfN42ef+gije893DcjhgtTcXLtDEyiM2C6nYtD+6GwoXVLyznH/4MJV/Bpc4lXBB+c5UtLD3mz25wjPLZxTrIsHSo/n86mDpyI0AQVbI4gNnW02qD761IIj1al75kkh7xsKC8pWNlGWd7OyIJOQsaDAPfeaf0WJHyEgoogaZMatm1cz7hyefRICgZr7+fNksx5rTEVeukYPyqlMPoQtj/m/Qxwn6qTJFtckNFWtoRdt0NhRYgzrfaipmGkbR1hH0mnkZScfs0e4ryF7HaA6gyzjiLOgDZVhQUNFz8Xm+hqIEWXN2Ko/7WDqyBpk9+fCshQT1jmm/1VtrdH7/OURQvmzYHFPmo9QOiG4uqBOw19QGu28uCLdyE3I15BdseiJltb3ng3c35ixoPq7R1tzbmLegKlP3C2OOG5/vC91ZEOTjeofR319jEevMSOTJ6PB6a/ln4ytoMlrqNsBHpw2eT3wNGp5SrRht595eEBwybkm+adpRkDWBLza96gcNqC/1/3pGpCYLF2JSvqm5Tno43qHLT9DRTrqU16ShgHKHBmrTymtFP/xuQn6BDkXKE/Gwwz+dKwXKW9XgToDTs96PEBSI/vGDjt68x9A5XCyQXTvS8OV5XDrQYDp76XJ/LlB/PNgucnTmrR8p1ATxgbL5BYyfZ672cXwFHY2Weg+/uM4fcF2dmy3BcKphnHMW/mtPnQwze+jwlJMIqUH9Uc58UW4vaMB4gjGx79N8ZWu+qSBmpjCeSx2veN+G78c7vkFQ81lY1+Cugfq3Dxqf13Z59xR0NOxAyAqCjjK3mnR+ZMeoxxZSVxM0Fd6emy4kiOlpkqCN+Ml8hKBhyKny3FKQsbozGz+ZL04mfsm12G22qbzfu+c4aBxoNMCOW7B3Dfb7QBJ09Nx1BdlrPWE5+lqC8Br5N6WduIqgmclWSDcWJehY3FQ+X0FQuXG6FOP3y84gRtB4WGieGPFLWtE5qP410blrrCDob6nEz5C/oGxZ5w94FTtW0Aeudjphgv7YW0fnzjMCNe1CgjqB8p9Su/Zy7wtPQW85Uz8fcQ18a1Aqf7tGgupIz/u1hoyIf4uroFTflOsLDHkKSsV3nL4kDfnWoFfjyr7sJEF5pO22CU2adl7jOYJrE3sloGwstI+OIn62ZwpHQe87sGd92L4tm4v4zkYB5xy0d/aNpe1u2ymrVFewFCHoLWWvUOUihv+iho3fSDp7yyZP0sV92rOjvcpFuBZkrxRb9RlUkqsoci5GPsWge3AUtwYOIyT0dIpJ+xQ3jIDQ7YxseLD/XbnKAoRFniWf/UeED4s8T2iP/w2CQpEgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAgQIIACQIkCJAg4B/A4z+fps3gNwAAAABJRU5ErkJggg==" /><!-- --></p>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
