@@ -8,9 +8,9 @@ on a map.}
 fars_map_state(state.num, year)
 }
 \arguments{
-\item{year}{An integer year}
+\item{state.num}{An integer state number}
 
-\item{state}{An integer state number}
+\item{year}{An integer year}
 }
 \value{
 This function returns a list of tibbles
