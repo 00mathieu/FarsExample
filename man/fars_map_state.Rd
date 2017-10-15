@@ -8,7 +8,7 @@ on a map.}
 fars_map_state(state.num, year)
 }
 \arguments{
-\item{state.num}{An integer state number}
+\item{state.num}{An integer state.num number}
 
 \item{year}{An integer year}
 }
@@ -21,7 +21,7 @@ on a map.
 }
 \note{
 function will produce an error if there is no state data for
-the \code{state} selected.
+the \code{state.num} selected.
 
 function will produce a warning if there are no accidents in
 state, year combination in data

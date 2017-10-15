@@ -111,10 +111,10 @@ fars_summarize_years <- function(years) {
 #' on a map.
 #'
 #' @param year An integer year
-#' @param state.num An integer state number
+#' @param state.num An integer state.num number
 #'
 #' @note function will produce an error if there is no state data for
-#' the \code{state} selected.
+#' the \code{state.num} selected.
 #' @note function will produce a warning if there are no accidents in
 #' state, year combination in data
 #'
