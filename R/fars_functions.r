@@ -90,6 +90,7 @@ fars_read_years <- function(years) {
 #' @importFrom dplyr summarize
 #' @importFrom tidyr spread
 #' @importFrom dplyr bind_rows
+#' @importFrom dplyr "%>%"
 #'
 #' @return This function returns a tibble that summarises each of the csv
 #' files corresponding to the \code{years}
