@@ -20,8 +20,7 @@ The functions that are exported as part of this package have to do with manipula
 First, we load the functions.
 
 ```{r}
-# devtools::load_all()
-library(FarsExample)
+devtools::load_all()
 library(dplyr)
 ```
 
@@ -33,7 +32,7 @@ The summarise years functions reads in the csv for the FARS data for a particula
 
 ```{r}
 
-setwd("../data")
+# setwd("../data")
 fars_summarize_years(c(2013,2014))
 
 ```
@@ -44,7 +43,7 @@ fars_summarize_years(c(2013,2014))
 This function will plot all the accidents in a given state for a given year.
 
 ```{r}
-setwd("../data")
+# setwd("../data")
 fars_map_state(1, 2013)
 
 ```

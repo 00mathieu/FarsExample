@@ -82,22 +82,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="sample-functions" class="section level1">
 <h1>Sample functions</h1>
 <p>First, we load the functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools::load_all()</span>
-<span class="kw">library</span>(FarsExample)
-<span class="kw">library</span>(dplyr)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">load_all</span>()</code></pre></div>
+<pre><code>## Loading FarsExample</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
 <p>Below, I give two examples of the use of these functions.</p>
 <div id="summarise-years-function" class="section level2">
 <h2>summarise years function</h2>
 <p>The summarise years functions reads in the csv for the FARS data for a particular year. It then summarises the number of fatal crashes per month in those years. The below example illustrates for the years 2013 and 2014.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;../data&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># setwd(&quot;../data&quot;)</span>
 <span class="kw">fars_summarize_years</span>(<span class="kw">c</span>(<span class="dv">2013</span>,<span class="dv">2014</span>))</code></pre></div>
 <pre><code>## # A tibble: 12 x 3
 ##    MONTH `2013` `2014`
@@ -118,7 +110,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="fars-map-function" class="section level2">
 <h2>fars map function</h2>
 <p>This function will plot all the accidents in a given state for a given year.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;../data&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># setwd(&quot;../data&quot;)</span>
 <span class="kw">fars_map_state</span>(<span class="dv">1</span>, <span class="dv">2013</span>)</code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
